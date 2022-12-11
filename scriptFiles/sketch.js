@@ -26,9 +26,9 @@ var lonList = [],
   latList = [],
   nameList = [];
 var pitch = 0;
-var clat = 38.27;
-var clon = -101.7431;
-var zoom = 3.45;
+var clat = 39.0;
+var clon = 35.0;
+var zoom = 5;
 
 var path = [],
   pathTrue = [];
@@ -60,13 +60,6 @@ function processJSON(data) {
   header1.innerText = text;
   var textWidth = getWidthOfText(text, "Arial", "15px");
   header1.style.left = window.innerWidth / 2 - textWidth / 2 + "px";
-
-  // Set header text
-  var header2 = document.getElementById("header2");
-  text = "Travelling to the " + numCities + " largest cities in the US";
-  header2.innerText = text;
-  textWidth = getWidthOfText(text, "Arial", "13px");
-  header2.style.left = window.innerWidth / 2 - textWidth / 2 + "px";
 
   // Parse the JSON data and set the global arrays
   parse(data, lonList, latList, nameList);
@@ -104,8 +97,11 @@ function draw() {
   noFill();
   stroke(255, 64, 64, 200);
   strokeWeight(2);
+  var header2 = document.getElementById("header2");
+  header2.innerText = randomStrategy.getBestSolution().map(city => city.name).join('\n')
   for (var i = 0, l = randomStrategy.getBestSolution().length; i < l; ++i) {
     stroke(255, 64, 64, 200);
+    
     vertex(randomStrategy.getBestSolution()[i].lon, randomStrategy.getBestSolution()[i].lat);
   }
   endShape();
